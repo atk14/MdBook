@@ -1,5 +1,6 @@
 <?php
 require_once(ATK14_DOCUMENT_ROOT . "/app/controllers/application.php");
+
 /**
  * Chci, aby to vypadalo jako http://progit.org/book/index.html
  * Chci pouzivat Markdown http://daringfireball.net/projects/markdown/
@@ -10,6 +11,8 @@ class MdBookBaseController extends ApplicationController{
 	var $book_title = "";
 
 	function index(){
+		$this->_prepare_book();
+
 		if($this->params->getString("format")=="sitemap"){
 			$this->render_template = false;
 			$this->response->setContentType("text/xml");
@@ -30,16 +33,9 @@ class MdBookBaseController extends ApplicationController{
 		$this->page_title = $this->breadcrumbs[] = $this->book->getTitle();
 	}
 
-	function _get_sitemap_chapter_item($chapter){
-		return "<url><loc>".$this->_link_to(array(
-			"action" => "detail",
-			"id" => $chapter,
-		),array(
-			"with_hostname" => true,
-		))."</loc></url>";
-	}
-
 	function detail(){
+		$this->_prepare_book();
+
 		$this->template_name = "md_book_base/detail";
 
 		if(!$chapter = $this->chapter = $this->book->getChapter($this->params->getString("id"))){
@@ -59,7 +55,7 @@ class MdBookBaseController extends ApplicationController{
 		$this->breadcrumbs[] = [$chapter->getTitle(),$this->_link_to(["action" => "detail", "id" => $chapter->getId()])];
 	}
 
-	function _before_filter(){
+	function _prepare_book(){
 		$controller = $this;
 		$this->book = $this->tpl_data["book"] = new MdBook($this->book_dir,array(
 			"prefilter" => new MdBookPrefilter([
@@ -72,5 +68,14 @@ class MdBookBaseController extends ApplicationController{
 		));
 
 		if($this->book_title){ $this->book->setTitle($this->book_title); }
+	}
+
+	function _get_sitemap_chapter_item($chapter){
+		return "<url><loc>".$this->_link_to(array(
+			"action" => "detail",
+			"id" => $chapter,
+		),array(
+			"with_hostname" => true,
+		))."</loc></url>";
 	}
 }
