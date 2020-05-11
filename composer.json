@@ -1,0 +1,21 @@
+{
+        "name": "atk14/md-book",
+        "type": "library",
+        "description": "A set of features that allow to publish Markdown books on web",
+        "keywords": [],
+        "homepage": "https://github.com/atk14/MdBook",
+        "license": ["MIT"],
+        "authors": [
+                {
+                        "name": "ATK14 Development Team",
+                        "homepage": "https://github.com/orgs/atk14/people"
+                }
+        ],
+        "require": {
+                "php": ">=5.4.0"
+        },
+        "require-dev": {
+        },
+        "autoload": {
+        }
+}
