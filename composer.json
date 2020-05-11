@@ -17,5 +17,6 @@
         "require-dev": {
         },
         "autoload": {
+                "classmap": ["src/lib"]
         }
 }
