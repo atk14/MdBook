@@ -7,6 +7,7 @@ require_once(ATK14_DOCUMENT_ROOT . "/app/controllers/application.php");
  */
 class MdBookBaseController extends ApplicationController{
 
+	var $book = null; // MdBook
 	var $book_dir = "";
 	var $book_title = "";
 
@@ -55,7 +56,15 @@ class MdBookBaseController extends ApplicationController{
 		$this->breadcrumbs[] = [$chapter->getTitle(),$this->_link_to(["action" => "detail", "id" => $chapter->getId()])];
 	}
 
-	function _prepare_book(){
+	function _get_book(){
+		if($this->book){ return $this->book; }
+
+		$book = new MdBook($this->book_dir);
+		return $book;
+
+		/*
+		$controller = $this;
+
 		$controller = $this;
 		$this->book = $this->tpl_data["book"] = new MdBook($this->book_dir,array(
 			"prefilter" => new MdBookPrefilter([
@@ -66,7 +75,11 @@ class MdBookBaseController extends ApplicationController{
 				}
 			])
 		));
+		*/
+	}
 
+	function _prepare_book(){
+		$this->book = $this->tpl_data["book"] = $this->_get_book(); 
 		if($this->book_title){ $this->book->setTitle($this->book_title); }
 	}
 

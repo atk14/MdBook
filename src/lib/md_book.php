@@ -76,15 +76,17 @@ class MdBook extends DrinkMarkdown {
 	var $title = null;
 
 	function __construct($book_directory,$options = array()) {
+
 		$options += array(
 			"prefilter" => new MdBookPrefilter(),
 			"postfilter" => new MdBookPostfilter(),
-			"markdown_transformer" => new DrinkMarkdown(array(
-				"shortcodes_enabled" => true,
-			)),
+			"shortcodes_enabled" => true,
+			"markdown_transformer" => $this,
 		);
 
 		$this->book_directory = $book_directory;
+
+		parent::__construct($options);
 
 		$this->prefilter = $options["prefilter"];
 		$this->postfilter = $options["postfilter"];
