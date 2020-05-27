@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.1.5] - 2020-05-27
+
+- Fixes & optimizations
+
 ## [0.1.4] - 2020-05-19
 
 - Added css selectors
