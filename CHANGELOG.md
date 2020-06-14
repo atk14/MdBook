@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.1.6] - 2020-06-14
+
+- Fix
+
 ## [0.1.5] - 2020-05-27
 
 - Fixes & optimizations
