@@ -4,13 +4,20 @@ class MdBookPostfilter extends DrinkMarkdownFilter {
 	function filter($content,$transformer){
 		$content = strtr($content,$GLOBALS["md_book_replaces"]);
 
+		// the auto syntax highlighter is not something we need by default
+		//$content = $this->autoHighlightSyntax($content);
+
+		return $content;
+	}
+
+	function autoHighlightSyntax($content){
 		$replaces = array();
 
 		// Source code examples with no syntax highlighting
 		preg_match_all('/<pre><code>(.*?)<\/code><\/pre>/si',$content,$matches);
 		for($i=0;$i<sizeof($matches[0]);$i++){
 			$snippet = $matches[0][$i];
-			$source_code = trim(html_entity_decode($matches[1][$i]));
+			$source_code = html_entity_decode($matches[1][$i]);
 
 			$lang = "";
 			
