@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.1.7] - 2020-06-14
+
+- Auto syntax highlighter disabled
+
 ## [0.1.6] - 2020-06-14
 
 - Fix
