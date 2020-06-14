@@ -84,13 +84,21 @@ class MdBook extends DrinkMarkdown {
 			"markdown_transformer" => $this,
 		);
 
+		$prefilter = $options["prefilter"];
+		unset($options["prefilter"]);
+
+		$postfilter = $options["postfilter"];
+		unset($options["postfilter"]);
+
+		$this->markdown_transformer = $options["markdown_transformer"];
+		unset($options["markdown_transformer"]);
+
 		$this->book_directory = $book_directory;
 
 		parent::__construct($options);
 
-		$this->prefilter = $options["prefilter"];
-		$this->postfilter = $options["postfilter"];
-		$this->markdown_transformer = $options["markdown_transformer"];
+		$prefilter && $this->markdown_transformer->prependPrefilter($prefilter);
+		$postfilter && $this->markdown_transformer->appendPostfilter($postfilter);
 
 		$this->_readContent();
 		$this->_sortContent();
@@ -153,12 +161,7 @@ class MdBook extends DrinkMarkdown {
 	}
 
 	function renderContent($markdown){
-
-		$markdown = $this->prefilter->filter($markdown,$this->markdown_transformer);
-
-		$html = $this->markdown_transformer->transform($markdown);
-
-		return $this->postfilter->filter($html,$this->markdown_transformer);
+		return $this->markdown_transformer->transform($markdown);
 	}
 
 	function _getIndexContent(){
