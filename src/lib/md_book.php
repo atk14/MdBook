@@ -81,6 +81,7 @@ class MdBook extends DrinkMarkdown {
 			"prefilter" => new MdBookPrefilter(),
 			"postfilter" => new MdBookPostfilter(),
 			"shortcodes_enabled" => true,
+			"html_purification_enabled" => false,
 			"markdown_transformer" => $this,
 		);
 
