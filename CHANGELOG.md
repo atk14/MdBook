@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.1.9] - 2020-06-24
+
+- The Table of Contents template fixed
+
 ## [0.1.8] - 2020-06-16
 
 - HTML purification is disabled by default
