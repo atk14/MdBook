@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2] - 2022-02-14
+
+- Added support for multilingual books
+
 ## [0.1.9] - 2020-06-24
 
 - The Table of Contents template fixed
