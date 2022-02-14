@@ -90,6 +90,20 @@ class MdBookChapter {
 		return $this->chapter_file;
 	}
 
+	function getFullFilename(){
+		$book_directory = $this->book->book_directory;
+		$preferred_lang = $this->book->preferred_lang;
+
+		file_exists($_f = $book_directory."/".$preferred_lang."/".$this->chapter_file) ||
+		($_f = $book_directory."/".$this->chapter_file);
+
+		if(file_exists($_f) && is_dir($_f)){
+			$_f .= "/index.md";
+		}
+
+		return $_f;
+	}
+
 	/**
 	 * Gets name of chapter that is taken from filename.
 	 *
@@ -153,7 +167,7 @@ class MdBookChapter {
 	 * @return string
 	 */
 	function getContent() {
-		$raw = Files::GetFileContent($this->getFile());
+		$raw = Files::GetFileContent($this->getFullFilename());
 		return $this->book->renderContent($raw);
 	}
 
@@ -201,8 +215,9 @@ class MdBookChapter {
 	}
 
 	private function _readContent() {
-		if (is_dir($this->chapter_file)) {
-			foreach(scandir($this->chapter_file) as $entry) {
+		$chapter_file = $this->book->book_directory."/".$this->chapter_file;
+		if (is_dir($chapter_file)) {
+			foreach(scandir($chapter_file) as $entry) {
 				# vyradime nevhodne soubory
 				if ($entry=="." || $entry=="..")
 					continue;
@@ -214,28 +229,33 @@ class MdBookChapter {
 					continue;
 				}
 				# scan section directory
-				$chapter = new MdBookChapter($this->book,$this->chapter_file."/$entry", $this);
+				$chapter = new MdBookChapter($this->book,$this->chapter_file."/".$entry, $this);
 				$this->subchapters[] = $chapter;
 			}
 
 			# u adresare si vezmeme udaje o kapitole z nazvu adresare
-			if (preg_match('/.+\/(\d+)-(.+?)$/', $this->chapter_file, $matches)) {
+			if (preg_match('/.+\/(\d+)-(.+?)$/', $chapter_file, $matches)) {
 				$this->chapter_no = (int)$matches[1];
 				$this->name = $matches[2];
 			}
-			$this->chapter_file .= "/index.md";
+			$chapter_file .= "/index.md";
 		} else {
-			if (preg_match('/.+\/(\d+)-(.+?)\.(md|markdown)$/', $this->chapter_file, $matches)) {
+			if (preg_match('/.+\/(\d+)-(.+?)\.(md|markdown)$/', $chapter_file, $matches)) {
 				$this->chapter_no = (int)$matches[1];
 				$this->name = $matches[2];
 			}
 		}
-		if (file_exists($this->chapter_file)) {
-			$content = preg_split("/\n/", Files::GetFileContent($this->chapter_file),null,PREG_SPLIT_NO_EMPTY);
+		if (file_exists($this->getFullFilename())) {
+			$content = preg_split("/\n/", Files::GetFileContent($this->getFullFilename()),null,PREG_SPLIT_NO_EMPTY);
+			if(!$content){
+				$content = array($this->getFullFilename());
+			}
 		} else {
-			$content = array(basename(dirname($this->chapter_file)));
+			$content = array(basename(dirname($chapter_file)));
+			if(!$content){
+				$content = array($chapter_file);
+			}
 		}
-
 		$this->title = $content[0];
 		return true;
 	}

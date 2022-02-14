@@ -75,6 +75,8 @@ class MdBook extends DrinkMarkdown {
 
 	var $title = null;
 
+	var $preferred_lang = "";
+
 	function __construct($book_directory,$options = array()) {
 
 		$options += array(
@@ -83,6 +85,7 @@ class MdBook extends DrinkMarkdown {
 			"shortcodes_enabled" => true,
 			"html_purification_enabled" => false,
 			"markdown_transformer" => $this,
+			"preferred_lang" => "", // "cs", "en"...
 		);
 
 		$prefilter = $options["prefilter"];
@@ -90,6 +93,9 @@ class MdBook extends DrinkMarkdown {
 
 		$postfilter = $options["postfilter"];
 		unset($options["postfilter"]);
+
+		$preferred_lang = $options["preferred_lang"];
+		unset($options["preferred_lang"]);
 
 		$this->markdown_transformer = $options["markdown_transformer"];
 		unset($options["markdown_transformer"]);
@@ -100,6 +106,7 @@ class MdBook extends DrinkMarkdown {
 
 		$prefilter && $this->markdown_transformer->prependPrefilter($prefilter);
 		$postfilter && $this->markdown_transformer->appendPostfilter($postfilter);
+		$this->preferred_lang = $preferred_lang;
 
 		$this->_readContent();
 		$this->_sortContent();
@@ -166,9 +173,7 @@ class MdBook extends DrinkMarkdown {
 	}
 
 	function _getIndexContent(){
-		if(file_exists($_f = "$this->book_directory/index.md")){
-			return Files::GetFileContent($_f);
-		}
+		return $this->_getFileContent("index.md");
 	}
 
 	private function _readContent() {
@@ -181,7 +186,7 @@ class MdBook extends DrinkMarkdown {
 			if (!preg_match("/^(\d+)-(.+)$/",$entry))
 				continue;
 
-			$chapter = new MdBookChapter($this,$this->book_directory."/$entry");
+			$chapter = new MdBookChapter($this,$entry);
 			$this->chapters[] = $chapter;
 		}
 		return true;
@@ -228,6 +233,27 @@ class MdBook extends DrinkMarkdown {
 				}
 			}
 			$prev_ch = $ch;
+		}
+	}
+
+	/**
+	 *
+	 *	$full_filename = $this->_getFullFilename("index.md");
+	 */
+	protected function _getFullFilename($filename){
+		if(strlen($this->preferred_lang) && file_exists($_f = "$this->book_directory/$this->preferred_lang/$filename")){
+			return $_f;
+		}
+		return "$this->book_directory/$filename";
+	}
+
+	/**
+	 *
+	 *	$content = $this->_getFileContent("index.md");
+	 */
+	protected function _getFileContent($filename){
+		if(file_exists($_f = $this->_getFullFilename($filename))){
+			return Files::GetFileContent($_f);
 		}
 	}
 }

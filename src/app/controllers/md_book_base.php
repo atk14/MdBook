@@ -59,7 +59,7 @@ class MdBookBaseController extends ApplicationController{
 	function _get_book(){
 		if($this->book){ return $this->book; }
 
-		$book = new MdBook($this->book_dir);
+		$book = new MdBook($this->book_dir,array("preferred_lang" => $this->lang));
 		return $book;
 
 		/*
