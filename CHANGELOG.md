@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2.1] - 2022-08-24
+
+* 85b4869 - Method MdBookChapter::CmpChapters() fixed
+
 ## [0.2] - 2022-02-14
 
 - Added support for multilingual books
