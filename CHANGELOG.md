@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2.2] - 2023-07-19
+
+* c1a5596 - PHP8 compatibility
+
 ## [0.2.1] - 2022-08-24
 
 * 85b4869 - Method MdBookChapter::CmpChapters() fixed
