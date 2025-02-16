@@ -1,8 +1,8 @@
 <?php
 define("TEMP",__DIR__ . "/tmp/");
 define("ATK14_DOCUMENT_ROOT",__DIR__ . "/tmp/");
-define("ATK14_USE_SMARTY4",true);
-define("ATK14_USE_SMARTY3",false);
+define("ATK14_USE_SMARTY4",PHP_VERSION_ID >= 70100);
+define("ATK14_USE_SMARTY3",!ATK14_USE_SMARTY4);
 define("ATK14_SMARTY_DIR_PERMS",0771);
 define("ATK14_SMARTY_FILE_PERMS",0644);
 define("ATK14_SMARTY_FORCE_COMPILE",true);
