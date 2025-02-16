@@ -59,4 +59,14 @@ class TcMdBook extends TcBase {
 		'),$chapters[1]->getContent());
 		$this->assertEquals(null,$chapters[1]->getNextChapter());
 	}
+
+	function test_getChapter(){
+		$book = new MdBook(__DIR__ . "/sample_book/");
+
+		$chapter = $book->getChapter("chapter-1:subchapter-2");
+		$this->assertNotNull($chapter);
+		$this->assertEquals("Subchapter 2",$chapter->getTitle());
+
+		$this->assertEquals(null,$book->getChapter("nonsence"));
+	}
 }
