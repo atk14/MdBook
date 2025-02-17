@@ -89,7 +89,7 @@ class MdBook extends DrinkMarkdown {
 			"shortcodes_enabled" => true,
 			"html_purification_enabled" => false,
 			"markdown_transformer" => $this,
-			"renderer" => function($template_name){ return "x"; throw new Exception("No renderer given"); },
+			"renderer" => function($template_name){ throw new Exception("No renderer given"); },
 			"preferred_lang" => "", // "cs", "en"...
 		);
 
