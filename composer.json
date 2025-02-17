@@ -19,7 +19,15 @@
                 "atk14/tester": "*",
                 "atk14/core": "dev-master",
                 "atk14/functions": "dev-master",
-								"smarty/smarty": "3.1.48|4.3.5"
+                "atk14/session-storer": "^1.0",
+                "atk14/http": "^0.8",
+                "atk14/stop-watch": "^0.1",
+                "atk14/logger": "^0.2",
+                "atk14/dictionary": "^1.0",
+                "atk14/mini-yaml": "^1.0",
+                "atk14/string4": "^0.5",
+                "atk14/forms": "^1.1",
+                "smarty/smarty": "3.1.48|4.3.5"
         },
         "autoload": {
                 "classmap": ["src/lib"]

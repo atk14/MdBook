@@ -2,7 +2,16 @@
 class TcMdBook extends TcBase {
 
 	function test(){
-		$book = new MdBook(__DIR__ . "/sample_book/");
+		$client = new Atk14Client();
+		$controller = $client->get("sample_book/index");
+	
+		$book = new MdBook(__DIR__ . "/sample_book/",array(
+			"renderer" =>  function($template_name) use($controller){
+				return $controller->_render($template_name,[
+					"book" => $controller->book,
+				]);
+			},
+		));
 
 		$this->assertEquals("Sample Book",$book->getTitle());
 		$this->assertStringContains(trim('
@@ -13,6 +22,13 @@ class TcMdBook extends TcBase {
 <h2>Introduction</h2>
 
 <p>Lorem ipsum dolor sit amet
+		'),$book->getContent());
+		$this->assertStringContains(trim('
+<h2>Table of Contents</h2>
+
+<ul class="table-of-contents">
+    <h4>1. <a href="/en/sample_book/detail/?id=chapter-1">Chapter 1</a></h4>
+    <h4>2. <a href="/en/sample_book/detail/?id=chapter-2">Chapter 2</a></h4>
 		'),$book->getContent());
 
 		$chapters = $book->getChapters();
