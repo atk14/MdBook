@@ -77,6 +77,10 @@ class MdBook extends DrinkMarkdown {
 
 	var $preferred_lang = "";
 
+	var $markdown_transformer;
+
+	var $renderer;
+
 	function __construct($book_directory,$options = array()) {
 
 		$options += array(
@@ -85,6 +89,7 @@ class MdBook extends DrinkMarkdown {
 			"shortcodes_enabled" => true,
 			"html_purification_enabled" => false,
 			"markdown_transformer" => $this,
+			"renderer" => function($template_name){ return "x"; throw new Exception("No renderer given"); },
 			"preferred_lang" => "", // "cs", "en"...
 		);
 
@@ -102,10 +107,13 @@ class MdBook extends DrinkMarkdown {
 
 		$this->book_directory = $book_directory;
 
+		$this->renderer = $options["renderer"];
+
 		parent::__construct($options);
 
-		$prefilter && $this->markdown_transformer->prependPrefilter($prefilter);
-		$postfilter && $this->markdown_transformer->appendPostfilter($postfilter);
+		$prefilter && $this->prependPrefilter($prefilter);
+		$postfilter && $this->appendPostfilter($postfilter);
+
 		$this->preferred_lang = $preferred_lang;
 
 		$this->_readContent();
@@ -255,5 +263,14 @@ class MdBook extends DrinkMarkdown {
 		if(file_exists($_f = $this->_getFullFilename($filename))){
 			return Files::GetFileContent($_f);
 		}
+	}
+
+	function prependPrefilter($prefilter){
+		$prefilter->renderer = $this->renderer;
+		return parent::prependPrefilter($prefilter);
+	}
+
+	function appendPostfilter($postfilter){
+		return parent::appendPrefilter($postfilter);
 	}
 }

@@ -1,13 +1,7 @@
 <?php
 class MdBookPrefilter extends DrinkMarkdownFilter {
 
-	function __construct($options = []){
-		$options += [
-			"renderer" => function($template_name){ throw new Exception("No renderer given"); }, 
-		];
-
-		$this->renderer = $options["renderer"];
-	}
+	var $renderer;
 
 	function filter($raw,$transformer){
 		$out = array();
