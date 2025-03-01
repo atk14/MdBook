@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2.3] - 2025-03-01
+
+* ed4b932 - Package is compatible with PHP>=5.6.0
+* 745b04b - The renderer is passed as an option to MdBook::__construct()
+* 227e197 - Template _table_of_contents.tpl updated
+
 ## [0.2.2] - 2023-07-19
 
 * c1a5596 - PHP8 compatibility
