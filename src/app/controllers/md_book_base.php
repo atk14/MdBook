@@ -30,14 +30,18 @@ class MdBookBaseController extends ApplicationController{
 			return;
 		}
 
-		$this->template_name = "md_book_base/index";
+		if(!$this->_template_exists("index.tpl")){
+			$this->template_name = "md_book_base/index";
+		}
 		$this->page_title = $this->breadcrumbs[] = $this->book->getTitle();
 	}
 
 	function detail(){
 		$this->_prepare_book();
 
-		$this->template_name = "md_book_base/detail";
+		if(!$this->_template_exists("detail.tpl")){
+			$this->template_name = "md_book_base/detail";
+		}
 
 		if(!$chapter = $this->chapter = $this->book->getChapter($this->params->getString("id"))){
 			return $this->_execute_action("error404");
@@ -98,5 +102,10 @@ class MdBookBaseController extends ApplicationController{
 		),array(
 			"with_hostname" => true,
 		))."</loc></url>";
+	}
+
+	function _template_exists($template_name){
+		$smarty = $this->_get_smarty();
+		return $smarty->templateExists($template_name);
 	}
 }
