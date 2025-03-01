@@ -42,6 +42,13 @@ class TcMdBook extends TcBase {
 <p>Lorem ipsum dolor sit amet
 		'),$chapters[0]->getContent());
 
+		$this->assertTrue($chapters[0]->hasSubchapters());
+		$subchapters = $chapters[0]->getSubchapters();
+		$this->assertEquals(2,sizeof($subchapters));
+
+		$this->assertEquals("chapter-1:subchapter-1",$subchapters[0]->getId());
+		$this->assertEquals("chapter-1:subchapter-2",$subchapters[1]->getId());
+
 		$next_chapter = $chapters[0]->getNextChapter();
 		$this->assertNotNull($next_chapter);
 		$this->assertEquals("Subchapter 1",$next_chapter->getTitle());
@@ -74,6 +81,10 @@ class TcMdBook extends TcBase {
 <p>Lorem ipsum dolor sit amet
 		'),$chapters[1]->getContent());
 		$this->assertEquals(null,$chapters[1]->getNextChapter());
+
+		$this->assertFalse($chapters[1]->hasSubchapters());
+		$subchapters = $chapters[1]->getSubchapters();
+		$this->assertEquals(0,sizeof($subchapters));
 	}
 
 	function test_getChapter(){
