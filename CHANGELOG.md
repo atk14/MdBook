@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2.5] - 2025-03-02
+
+* 6230360 - Reorganisation of templates
+
 ## [0.2.4] - 2025-03-01
 
 * 0414176 - Template md_book_base/index.tpl or md_book_base/detail.tpl is used if there is no corresponding template for the current controller
