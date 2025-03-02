@@ -8,6 +8,7 @@ require_once(ATK14_DOCUMENT_ROOT . "/app/controllers/application.php");
 class MdBookBaseController extends ApplicationController{
 
 	var $book = null; // MdBook
+	var $book_options = array(); // e.g. ["keep_html_tables_unmodified" => false, "table_class" => ""]
 	var $book_dir = "";
 	var $book_title = "";
 
@@ -64,14 +65,16 @@ class MdBookBaseController extends ApplicationController{
 		if($this->book){ return $this->book; }
 
 		$controller = $this;
-		$book = new MdBook($this->book_dir,array(
-			"renderer" => function($template_name) use($controller){
-				return $controller->_render($template_name,[
-					"book" => $controller->book,
-				]);
-			},
+		$renderer = function($template_name) use($controller){
+			return $controller->_render($template_name,[
+				"book" => $controller->book,
+			]);
+		};
+		$options = $this->book_options + array(
+			"renderer" => $renderer,
 			"preferred_lang" => $this->lang,
-		));
+		);
+		$book = new MdBook($this->book_dir,$options);
 		return $book;
 
 		/*
