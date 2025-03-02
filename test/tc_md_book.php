@@ -27,9 +27,9 @@ class TcMdBook extends TcBase {
 <h2>Table of Contents</h2>
 
 <ul class="table-of-contents">
-    <h4>1. <a href="/en/sample_book/detail/?id=chapter-1">Chapter 1</a></h4>
-    <h4>2. <a href="/en/sample_book/detail/?id=chapter-2">Chapter 2</a></h4>
 		'),$book->getContent());
+		$this->assertStringContains('<h4>1. <a href="/en/sample_book/detail/?id=chapter-1">Chapter 1</a></h4>',$book->getContent());
+		$this->assertStringContains('<h4>2. <a href="/en/sample_book/detail/?id=chapter-2">Chapter 2</a></h4>',$book->getContent());
 
 		$chapters = $book->getChapters();
 		$this->assertEquals(2,sizeof($chapters));
