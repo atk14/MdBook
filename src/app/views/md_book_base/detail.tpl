@@ -3,10 +3,11 @@
 
 		<div class="col col-md-9 md_book_content" role="main">
 			{$page_content nofilter}
+			{render partial="shared/md_book/subchapters" subchapters=$chapter->getSubchapters()}
 		</div>
 
 		<div class="col col-md-3 md_book_sidebar" role="complementary">
-			{render partial="md_book_base/sidebar/table_of_contents"}
+			{render partial="shared/md_book/sidebar/table_of_contents"}
 		</div>
 
 	</div>
