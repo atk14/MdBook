@@ -66,6 +66,10 @@ class MdBookBaseController extends ApplicationController{
 
 		$controller = $this;
 		$renderer = function($template_name) use($controller){
+			$controller->smarty = $controller->_get_smarty();
+			$template_dir = $controller->smarty->getTemplateDir();
+			$template_dir[] = ATK14_DOCUMENT_ROOT . "/app/views/md_book_base/";
+			$controller->smarty->setTemplateDir($template_dir);
 			return $controller->_render($template_name,[
 				"book" => $controller->book,
 			]);
