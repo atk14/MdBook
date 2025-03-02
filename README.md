@@ -11,6 +11,7 @@ Installation
 
     ln -s ../../vendor/atk14/md-book/src/app/controllers/md_book_base.php ./app/controllers/
     ln -s ../../vendor/atk14/md-book/src/app/views/md_book_base ./app/views/
+    ln -s ../../../vendor/atk14/md-book/src/app/views/shared/md_book ./app/views/shared
 
 Usage in an Atk14 application
 =============================
