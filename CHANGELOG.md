@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2.6] - 2025-03-04
+
+* 811ba65 - Renderer improved - it searches for partial templates also in app/views/md_book_base/
+* 69aa88d - Added variable MdBookBaseController::$book_options = array()
+
 ## [0.2.5] - 2025-03-02
 
 * 6230360 - Reorganisation of templates
