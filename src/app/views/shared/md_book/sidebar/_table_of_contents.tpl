@@ -1,25 +1,25 @@
 {assign current_chapter $chapter}
 
-{if USING_BOOTSTRAP3}
+{if USING_BOOTSTRAP5}
 
-	{* BOOTSTRAP 3 *}
+	<div class="toc" id="js--sidebar">
+		<div class="sidebar__inner">
+			{*<h3 class="d-md-none">{t}Table of contents{/t}</h3>*}
+			<div class="nav flex-column nav--toc">
+				<a href="{link_to action="index"}" class="nav-link nav-link--level-1 {if $action=="index"} active{/if}">{!$book->getTitle()}</a>
+				{foreach $book->getChapters() as $ch}
+					<a href="{link_to action=detail id=$ch}" class="nav-link nav-link--level-1 {if $current_chapter && $current_chapter->getNo()===$ch->getNo()} active{/if}"><span class="chapter-no">{$ch->getNo()}.</span> {$ch->getTitle()}</a>
+					{foreach $ch->getSubchapters() as $sub_ch}
+						<a href="{link_to action=detail id=$sub_ch}" class="nav-link nav-link--level-2 pl-4{if $current_chapter && $current_chapter->getNo()===$sub_ch->getNo()} active{/if}"><span class="chapter-no">{$sub_ch->getNo()}.</span> {$sub_ch->getTitle()}</a>
+					{/foreach}
+				{/foreach}
+			</div>
+		</div>
+	</div>
 
-	<h3>{t}Table of contents{/t}</h3>
-	<ul class="nav nav-pills nav-stacked">
-		<li{if $action=="index"} class="active"{/if}><a href="{link_to action="index"}">{!$book->getTitle()}</a></li>
-		{foreach $book->getChapters() as $ch}
-			<li{if $current_chapter && $current_chapter->getNo()===$ch->getNo()} class="active"{/if}><a href="{link_to action=detail id=$ch}">{$ch->getNo()}. {$ch->getTitle()}</a></li>
-			{foreach $ch->getSubchapters() as $sub_ch}
-				<li{if $current_chapter && $current_chapter->getNo()===$sub_ch->getNo()} class="active"{/if}><a href="{link_to action=detail id=$sub_ch}">{$sub_ch->getNo()}. {$sub_ch->getTitle()}</a></li>
-			{/foreach}
-		{/foreach}
-	</ul>
+{elseif USING_BOOTSTRAP4}
 
-{else}
-
-	{* BOOTSTRAP 4, BOOTSTRAP 5 *}
-
-	<h3 class="d-md-none">{t}Table of contents{/t}</h3>
+	{* <h3 class="d-md-none">{t}Table of contents{/t}</h3> *}
 	<div class="nav flex-column nav-pills">
 		<a href="{link_to action="index"}" class="nav-link{if $action=="index"} active{/if}">{!$book->getTitle()}</a>
 		{foreach $book->getChapters() as $ch}
@@ -29,5 +29,20 @@
 			{/foreach}
 		{/foreach}
 	</div>
+
+{else}
+
+	{* BOOTSTRAP 3 *}
+
+	{* <h3>{t}Table of contents{/t}</h3> *}
+	<ul class="nav nav-pills nav-stacked">
+		<li{if $action=="index"} class="active"{/if}><a href="{link_to action="index"}">{!$book->getTitle()}</a></li>
+		{foreach $book->getChapters() as $ch}
+			<li{if $current_chapter && $current_chapter->getNo()===$ch->getNo()} class="active"{/if}><a href="{link_to action=detail id=$ch}">{$ch->getNo()}. {$ch->getTitle()}</a></li>
+			{foreach $ch->getSubchapters() as $sub_ch}
+				<li{if $current_chapter && $current_chapter->getNo()===$sub_ch->getNo()} class="active"{/if}><a href="{link_to action=detail id=$sub_ch}">{$sub_ch->getNo()}. {$sub_ch->getTitle()}</a></li>
+			{/foreach}
+		{/foreach}
+	</ul>
 
 {/if}
