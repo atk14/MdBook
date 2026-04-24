@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to MdBook will be documented in this file.
 
+## [0.2.7] - 2026-04-24
+
+* Markup tuned for Bootstrap 5
+
 ## [0.2.6] - 2025-03-04
 
 * 811ba65 - Renderer improved - it searches for partial templates also in app/views/md_book_base/
