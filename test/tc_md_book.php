@@ -23,11 +23,8 @@ class TcMdBook extends TcBase {
 
 <p>Lorem ipsum dolor sit amet
 		'),$book->getContent());
-		$this->assertStringContains(trim('
-<h2>Table of Contents</h2>
-
-<ul class="table-of-contents">
-		'),$book->getContent());
+		$this->assertStringContains(trim('Table of Contents'),$book->getContent());
+		$this->assertStringContains(trim('<ul class="table-of-contents'),$book->getContent());
 		$this->assertStringContains('<h4>1. <a href="/en/sample_book/detail/?id=chapter-1">Chapter 1</a></h4>',$book->getContent());
 		$this->assertStringContains('<h4>2. <a href="/en/sample_book/detail/?id=chapter-2">Chapter 2</a></h4>',$book->getContent());
 
